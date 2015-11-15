@@ -1,0 +1,138 @@
+<resources>
+    <string name="app_name">Finer</string>
+
+    <!-- Note: &#8230; is the dedicated ellipsis character (...) -->
+
+    <string name="election_id">ID</string>
+    <string name="election_question">Question</string>
+    <string name="election_start">Start time</string>
+    <string name="election_start_date">Start date</string>
+    <string name="election_start_time">@string/election_start</string>
+    <string name="election_end">End time</string>
+    <string name="election_end_date">End date</string>
+    <string name="election_end_time">@string/election_end</string>
+    <string name="election_abb_url">Audit Bulletin Board URL</string>
+    <string name="election_key">Decommitment key</string>
+    <string name="election_bundle">Decommitment bundle</string>
+
+    <!-- ============================== Action Bar ============================== -->
+    <string name="action_erase">Erase election</string>
+    <string name="action_erase_all">Erase all</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_about">About</string>
+
+    <!-- ============================== Activities ============================== -->
+    <string name="loading">Loading&#8230;</string>
+    <string name="wait">Please wait</string>
+
+    <string name="activity_election_title">Election</string>
+    <string name="activity_election_text_initialize">Ready for initialization</string>
+    <string name="activity_election_text_initializing">Initializing&#8230;</string>
+    <string name="activity_election_text_verify">Ready for verification</string>
+    <string name="activity_election_text_verifying">Verifying&#8230;</string>
+    <string name="activity_election_text_completed">All done</string>
+    <string name="activity_election_text_pending">Awaiting processing&#8230;</string>
+    <string name="activity_election_text_erasing">Erasing&#8230;</string>
+    <string name="activity_election_text_invalid">
+        Election is in an invalid state. Please erase it and create a new one.
+    </string>
+
+    <string name="list_item_action">Election action button</string>
+
+    <string name="choose_file">Choose input file</string>
+    <string name="no_decommitment_key">Not acquired yet</string>
+    <string name="no_decommitment_bundle">Not computed yet</string>
+
+    <!-- ============================== Dialogs ============================== -->
+    <string name="new_election">New election details</string>
+    <string name="url_prefix">http:/</string>
+
+    <string name="erase_election_title">Erase election?</string>
+    <string name="erase_all_title">Erase all elections?</string>
+    <string name="erase_message">This operation cannot be undone!</string>
+
+    <string name="data_usage_title">Verify election?</string>
+    <string name="data_usage_message">
+        Election verification will cause high mobile data usage for large elections!
+    </string>
+    <string name="data_usage_ok">Verify</string>
+
+    <string name="error_invalid_election_id">Invalid election ID</string>
+    <string name="error_empty_election_id">Empty election ID</string>
+    <string name="error_invalid_url">Invalid URL</string>
+    <string name="error_empty_url">Empty URL</string>
+
+    <!-- ============================== Toasts ============================== -->
+    <string name="toast_service_election_initialized">
+        Election \"%s\" initialized.
+    </string>
+    <string name="toast_service_election_verified">
+        Election \"%s\" verified.
+    </string>
+    <string name="toast_service_election_completed">
+        Election \"%s\" completed.
+    </string>
+    <string name="toast_service_election_erased">
+        Election \"%s\" erased.
+    </string>
+
+    <string name="toast_service_election_exists">
+        The election with ID \"%s\" already exists.
+    </string>
+
+    <string name="toast_no_internet">
+        Please check your internet connection and try again.
+    </string>
+    <string name="toast_no_file_manager">
+        No file manager found. Please install a file manager app.
+    </string>
+    <string name="toast_db_load_error">
+        Something went wrong while loading the data from storage.
+    </string>
+
+    <!-- ============================== Notifications ============================== -->
+    <string name="notification_ongoing_initialized_title">Initializing election \"%s\"&#8230;</string>
+    <string name="notification_ongoing_initialized_message">%d ballots parsed</string>
+    <string name="notification_ongoing_verified_title">Verifying election \"%s\"&#8230;</string>
+    <string name="notification_ongoing_verified_message">%1$d/%2$d voted ballots parsed</string>
+
+    <string name="notification_initialized_title">Election initialization completed</string>
+    <string name="notification_initialized_message">Election: %1$s, Ballots: %2$d</string>
+    <string name="notification_verified_title">Election verification completed</string>
+    <string name="notification_verified_message">Election: %1$s, Voted ballots: %2$d</string>
+
+    <!-- Notification errors -->
+    <string name="notification_generic_error">Error</string>
+    <string name="notification_create_error">Error creating election \"%s\"</string>
+    <string name="notification_initialize_error">Error initializing election \"%s\"</string>
+    <string name="notification_verify_error">Error verifying election \"%s\"</string>
+    <string name="notification_erase_error">Error erasing election \"%s\"</string>
+    <string name="notification_erase_all_error">Error erasing all elections</string>
+
+    <string name="notification_file_not_found">
+        The selected file was not found. Did the file get deleted or moved?
+    </string>
+    <string name="notification_io_error">
+        Unable to read data.
+    </string>
+    <string name="notification_parse_error">
+        The data is not properly formatted. Was the correct source selected?
+    </string>
+    <string name="notification_storage_error">
+        Unable to save or load data from storage.
+    </string>
+    <string name="notification_storage_full_error">
+         Device storage is full. Erase some data and try again.
+    </string>
+    <string name="notification_timeout">
+        The server took too long to respond.
+    </string>
+    <string name="notification_invalid_url">
+        Invalid URL.
+    </string>
+
+    <string name="hello_world">Hello world!</string>
+
+    <!-- ============================== Misc ============================== -->
+
+</resources>

@@ -1,0 +1,6 @@
+* Create an app logo.
+* Create the app's own theme.
+* C++ JNICryptosystem is a singleton. Fix it.
+* Add a preferences activity.
+* Offer optional concurrent election processing.
+* NFC support and encryption

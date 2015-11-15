@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:minHeight="88dp">
+    <!-- Empty view used as a footer in a view. Min height is computed from FAB size and margin. -->
+</FrameLayout>

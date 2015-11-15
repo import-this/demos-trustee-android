@@ -1,0 +1,159 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'TempKey'
+            keyPassword '123456'
+            storeFile file('E:/Android/Keystore/android.jks')
+            storePassword '123456'
+        }
+    }
+    compileSdkVersion 23
+    buildToolsVersion '25.0.0'
+    defaultConfig {
+        applicationId "gr.uoa.di.finer"
+        minSdkVersion 10
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+
+        ndk {
+            moduleName "cryptosystem"
+            // Our C++ code throws exceptions.
+            cFlags "-fexceptions"
+            // Our C++ code uses std::string (<string>).
+            stl "gnustl_shared"     // What about GNU libstdc++ GPLv3 license?
+        }
+    }
+    //versionCode digit for each supported ABI, with 64bit>32bit and x86>armeabi-*
+    // project.ext.versionCodes = ['armeabi':1, 'armeabi-v7a':2, 'arm64-v8a':3, 'mips':5,
+    //'mips64':6, 'x86':8, 'x86_64':9]
+    /*
+     * http://tools.android.com/tech-docs/new-build-system/tips
+     * http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
+     * http://stackoverflow.com/a/24083451/1751037
+     * https://developer.android.com/ndk/guides/abis.html
+     */
+    flavorDimensions "abi"
+    productFlavors {
+        // https://gcc.gnu.org/onlinedocs/gcc-4.9.2/gcc/ARM-Options.html
+        arm {
+            dimension "abi"
+            ndk {
+                abiFilter "armeabi"
+                cFlags "-march=armv5te"
+            }
+            versionCode 1
+        }
+        armv7a {
+            dimension "abi"
+            ndk {
+                abiFilter "armeabi-v7a"
+                // https://developer.android.com/ndk/guides/abis.html#v7a
+                cFlags "-march=armv7-a -mtune=generic-armv7-a -marm -mhard-float -mfloat-abi=softfp"
+            }
+            versionCode 2
+        }
+        arm64v8a {
+            dimension "abi"
+            ndk {
+                abiFilter "arm64-v8a"
+                cFlags "-march=armv8-a"
+            }
+            versionCode 3
+        }
+        // https://gcc.gnu.org/onlinedocs/gcc-4.9.2/gcc/i386-and-x86-64-Options.html
+        // https://software.intel.com/blogs/2012/09/26/gcc-x86-performance-hints
+        x86 {
+            dimension "abi"
+            ndk {
+                abiFilter "x86"
+                cFlags "-m32 -march=i686 -mtune=atom -mssse3 -mfpmath=sse"
+            }
+            // It must be higher than the arm one for devices supporting both, as x86 is preferred.
+            versionCode 6
+        }
+        x86_64 {
+            dimension "abi"
+            ndk {
+                abiFilter "x86_64"
+                cFlags "-m64 -march=x86-64 -mtune=slm -msse4.2 -mpopcnt"
+            }
+            versionCode 7
+        }
+        // https://gcc.gnu.org/onlinedocs/gcc-4.9.2/gcc/MIPS-Options.html
+        mips {
+            dimension "abi"
+            ndk {
+                abiFilter "mips"
+                cFlags "-march=mips32 -mtune=mips32"
+            }
+            versionCode 4
+        }
+        mips64 {
+            dimension "abi"
+            ndk {
+                abiFilter "mips64"
+                cFlags "-march=mips64r6 -mtune=mips64r6"
+            }
+            versionCode 5
+        }
+        fat {
+            dimension "abi"
+            // Fat binary, lowest version code to be the last option.
+            versionCode 0
+        }
+    }
+    // Make per-variant version code.
+    applicationVariants.all { variant ->
+        // Get the version code of each flavor.
+        def abiVersion = variant.productFlavors.get(0).versionCode
+
+        // Set the composite code.
+        variant.mergedFlavor.versionCode = abiVersion * 100000 + defaultConfig.versionCode
+    }
+    buildTypes {
+        debug {
+            debuggable true         // This is the default.
+        }
+        release {
+            debuggable false        // This is the default.
+            jniDebuggable false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+            zipAlignEnabled true
+            ndk {
+                cFlags "-O3"
+            }
+        }
+        debugRelease.initWith(buildTypes.release);
+        debugRelease {
+            debuggable true
+        }
+        jniDebug.initWith(buildTypes.debug)
+        jniDebug {
+            applicationIdSuffix ".jnidebug"
+            jniDebuggable true
+        }
+    }
+    /*
+     * http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Using-sourceCompatibility-1.7
+     * We can use everything in Java 7, except try-with-resources which requires minSdkVersion 19.
+     * All the other Java 7 features require only minSdkVersion 8 (We support minSdkVersion 10).
+     */
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'com.android.support:design:23.1.0'
+    // Google Protocol Buffers. Version 2.6.0 was used for the rest of the project.
+    // This should probably get updated in the future.
+    compile 'com.google.protobuf:protobuf-java:2.6.0'
+}

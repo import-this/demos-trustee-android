@@ -1,0 +1,31 @@
+// Messages sent from the Election Authority (EA) to the Trustees (a.k.a. KeyHolders).
+
+package protobuf;
+
+option java_package="gr.uoa.di.finer.parse.protobuf";
+option java_outer_classname = "EAMessages";
+
+message Ballot {
+
+	message Side {
+
+		message VoteCodeTuple {
+			required string voteCode = 2;
+			required string decommitment = 3;
+		}
+
+		// The ballot part ID (i.e. 'A' or 'B').
+		required string ID = 2;
+		repeated VoteCodeTuple voteCodeTuples = 3;
+
+	}
+
+	// The serial number is stored as a string by the EA (for some reason that I don't know).
+	required string serialNumber = 2;
+	required Side partA = 3;
+	required Side partB = 4;
+}
+
+message Key{
+	required string decommitmentKey = 1;
+}
